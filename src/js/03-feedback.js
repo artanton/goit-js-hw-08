@@ -37,6 +37,7 @@ function onSubmit(event) {
   console.log(data);
 }
 
+
 function resetForm(form) {
   form.reset();
   data.email = "";
