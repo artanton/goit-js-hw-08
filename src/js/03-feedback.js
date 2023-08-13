@@ -11,7 +11,7 @@ const data = {
   message: "",
 };
 
-// Load saved data from local storage on page load
+
 const savedData = JSON.parse(localStorage.getItem('feedback-form-state'));
 if (savedData) {
   refs.inputEmail.value = savedData.email;
