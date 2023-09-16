@@ -1,3 +1,4 @@
+console.log(9);
 import throttle from 'lodash.throttle';
 
 const refs = {
@@ -6,18 +7,18 @@ const refs = {
   form: document.querySelector('.feedback-form'),
 };
 
+const StorageKey = 'feedback-form-state';
 const data = {
-  email: "",
-  message: "",
+  email: '',
+  message: '',
 };
 
+const savedData = localStorage.getItem('feedback-form-state');
 
-const savedData = JSON.parse(localStorage.getItem('feedback-form-state'));
 if (savedData) {
-  refs.inputEmail.value = savedData.email;
-  refs.inputMessage.value = savedData.message;
-  data.email = savedData.email;
-  data.message = savedData.message;
+  const { email, message } = JSON.parse(savedData) || {};
+  refs.inputEmail.value = email;
+  refs.inputMessage.value = message;
 }
 
 refs.form.addEventListener('input', throttle(dataHandler, 500));
@@ -25,6 +26,7 @@ refs.form.addEventListener('input', throttle(dataHandler, 500));
 function dataHandler() {
   data.email = refs.inputEmail.value;
   data.message = refs.inputMessage.value;
+
   localStorage.setItem('feedback-form-state', JSON.stringify(data));
 }
 
@@ -32,15 +34,13 @@ refs.form.addEventListener('submit', onSubmit);
 
 function onSubmit(event) {
   event.preventDefault();
-  localStorage.removeItem('feedback-form-state');
-  resetForm(refs.form); 
-  console.log(data);
-}
 
-
-function resetForm(form) {
-  form.reset();
-  data.email = "";
-  data.message = "";
-  localStorage.removeItem('feedback-form-state');
+  if (!refs.inputEmail.value || !refs.inputEmail.value) {
+    alert('input the data');
+  } else {
+    localStorage.removeItem('feedback-form-state');
+    refs.inputEmail.value = '';
+    refs.inputMessage.value = '';
+    console.log(data);
+  }
 }
