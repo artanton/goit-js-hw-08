@@ -1,4 +1,4 @@
-console.log(9);
+
 import throttle from 'lodash.throttle';
 
 const refs = {
